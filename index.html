@@ -1,188 +1,384 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Master - Wani Huzaif</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 2px;
-        }
-        .author {
-            text-align: center;
-            color: #8e44ad;
-            font-weight: bold;
-            font-size: 14px;
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button.add-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button.add-btn:hover {
-            background-color: #219150;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #34495e;
-            color: white;
-        }
-        .given { color: #e74c3c; font-weight: bold; }
-        .taken { color: #27ae60; font-weight: bold; }
-        .delete-btn {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        footer {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 12px;
-            color: #95a5a6;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credit Master</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: #0d021a;
+      color: #e0aaff;
+      padding: 15px;
+      padding-bottom: 30px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* User Profile Setup */
+    .user-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #14052b;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #7b2cbf;
+    }
+
+    .user-info {
+      font-size: 0.9rem;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .login-btn {
+      background: transparent;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px 0;
+      background: #190633;
+      color: #ffffff;
+      border: 2px solid #b026ff;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #b026ff, inset 0 0 10px #b026ff;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      text-shadow: 0 0 8px #d800ff, 0 0 15px #b026ff;
+      letter-spacing: 1px;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: #14052b;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #7b2cbf;
+      box-shadow: 0 0 10px rgba(176, 38, 255, 0.2);
+    }
+
+    .card h3 {
+      font-size: 0.85rem;
+      color: #c77dff;
+      margin-bottom: 5px;
+    }
+
+    .card p {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .debit-val { 
+      color: #00ffcc; 
+      text-shadow: 0 0 8px #00ffcc;
+    }
+
+    .credit-val { 
+      color: #ff2a74; 
+      text-shadow: 0 0 8px #ff2a74;
+    }
+
+    form {
+      background: #14052b;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #7b2cbf;
+      box-shadow: 0 0 10px rgba(176, 38, 255, 0.2);
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+      color: #e0aaff;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      background: #0d021a;
+      color: #ffffff;
+      border: 1px solid #b026ff;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+
+    input:focus, select:focus {
+      box-shadow: 0 0 8px #b026ff;
+    }
+
+    button.submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #9d4edd;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 12px #b026ff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button.submit-btn:active {
+      background: #7b2cbf;
+      box-shadow: 0 0 5px #b026ff;
+    }
+
+    .transactions {
+      background: #14052b;
+      border-radius: 10px;
+      padding: 15px;
+      border: 1px solid #7b2cbf;
+      box-shadow: 0 0 10px rgba(176, 38, 255, 0.2);
+    }
+
+    .transactions h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #e0aaff;
+      border-bottom: 1px solid #3c096c;
+      padding-bottom: 5px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #240046;
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .due-date {
+      font-size: 0.75rem;
+      color: #ffb703;
+      margin-top: 3px;
+    }
+
+    .delete-btn {
+      background: #ff2a74;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      width: auto;
+      margin-left: 10px;
+      box-shadow: 0 0 5px #ff2a74;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 35px;
+      padding: 15px;
+      border-top: 1px solid #3c096c;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: #c77dff;
+    }
+
+    footer span {
+      color: #00ffcc;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00ffcc;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Credit Master</h1>
-    <p class="author">Created by Wani Huzaif</p>
-    <p class="subtitle">Credit & Ledger Manager</p>
-
-    <div class="form-group">
-        <label for="name">Person Name:</label>
-        <input type="text" id="name" placeholder="Enter name">
+  <div class="container">
+    
+    <!-- User Login Bar -->
+    <div class="user-bar">
+      <div class="user-info">👤 User: <span id="username-display">Guest</span></div>
+      <button class="login-btn" onclick="changeUser()">Change / Setup</button>
     </div>
 
-    <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" placeholder="Enter amount">
+    <header>
+      <h1>Credit Master</h1>
+      <p style="font-size: 0.85rem; color: #c77dff; margin-top: 5px;">Smart Ledger & Date Reminder</p>
+    </header>
+
+    <div class="summary">
+      <div class="card">
+        <h3>To Receive (Debit)</h3>
+        <p class="debit-val" id="total-debit">₹0</p>
+      </div>
+      <div class="card">
+        <h3>To Pay (Credit)</h3>
+        <p class="credit-val" id="total-credit">₹0</p>
+      </div>
     </div>
 
-    <div class="form-group">
-        <label for="type">Transaction Type:</label>
+    <form id="ledger-form">
+      <div class="input-group">
+        <label for="person">Person Name / Details</label>
+        <input type="text" id="person" placeholder="e.g. Rahul" required>
+      </div>
+      <div class="input-group">
+        <label for="amount">Amount</label>
+        <input type="number" id="amount" placeholder="0.00" required>
+      </div>
+      <div class="input-group">
+        <label for="dueDate">Date / Reminder (e.g. 06 Aug)</label>
+        <input type="date" id="dueDate" required>
+      </div>
+      <div class="input-group">
+        <label for="type">Type</label>
         <select id="type">
-            <option value="given">I Gave (You owe me)</option>
-            <option value="taken">I Took (I owe you)</option>
+          <option value="debit">Debit (Given / To Receive)</option>
+          <option value="credit">Credit (Taken / To Pay)</option>
         </select>
+      </div>
+      <button type="submit" class="submit-btn">Add Record</button>
+    </form>
+
+    <div class="transactions">
+      <h2>History & Reminders</h2>
+      <ul id="list"></ul>
     </div>
-
-    <button class="add-btn" onclick="addRecord()">Add Record</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Amount</th>
-                <th>Type</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="recordList"></tbody>
-    </table>
 
     <footer>
-        &copy; Credit Master | Developed by Wani Huzaif
+      <p>Created with ⚡ by <span>Huzaif Wanii 👑⚡</span></p>
     </footer>
-</div>
 
-<script>
-    function addRecord() {
-        var name = document.getElementById("name").value;
-        var amount = document.getElementById("amount").value;
-        var type = document.getElementById("type").value;
+  </div>
 
-        if (name === "" || amount === "") {
-            alert("Please enter both Name and Amount!");
-            return;
-        }
+  <script>
+    let entries = JSON.parse(localStorage.getItem('credit_master_entries')) || [];
+    let currentUser = localStorage.getItem('credit_master_user') || 'Guest';
 
-        var table = document.getElementById("recordList");
-        var row = table.insertRow();
+    const form = document.getElementById('ledger-form');
+    const personInput = document.getElementById('person');
+    const amountInput = document.getElementById('amount');
+    const dueDateInput = document.getElementById('dueDate');
+    const typeInput = document.getElementById('type');
+    const list = document.getElementById('list');
+    const totalDebitEl = document.getElementById('total-debit');
+    const totalCreditEl = document.getElementById('total-credit');
+    const usernameDisplay = document.getElementById('username-display');
 
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
+    usernameDisplay.innerText = currentUser;
 
-        cell1.innerHTML = name;
-        cell2.innerHTML = amount;
-
-        if (type === "given") {
-            cell3.innerHTML = "<span class='given'>Gave</span>";
-        } else {
-            cell3.innerHTML = "<span class='taken'>Took</span>";
-        }
-
-        cell4.innerHTML = "<button class='delete-btn' onclick='deleteRecord(this)'>X</button>";
-
-        document.getElementById("name").value = "";
-        document.getElementById("amount").value = "";
+    function changeUser() {
+      const name = prompt("Enter your name / login username:", currentUser);
+      if(name && name.trim() !== "") {
+        currentUser = name.trim();
+        localStorage.setItem('credit_master_user', currentUser);
+        usernameDisplay.innerText = currentUser;
+      }
     }
 
-    function deleteRecord(btn) {
-        var row = btn.parentNode.parentNode;
-        row.parentNode.removeChild(row);
+    function formatDate(dateStr) {
+      if(!dateStr) return '';
+      const d = new Date(dateStr);
+      const options = { day: '2-digit', month: 'short', year: 'numeric' };
+      return d.toLocaleDateString('en-IN', options);
     }
-</script>
 
+    function updateUI() {
+      list.innerHTML = '';
+      let totalDebit = 0;
+      let totalCredit = 0;
+
+      entries.forEach((item, index) => {
+        const li = document.createElement('li');
+        const isDebit = item.type === 'debit';
+        
+        if(isDebit) totalDebit += parseFloat(item.amount);
+        else totalCredit += parseFloat(item.amount);
+
+        li.innerHTML = `
+          <div>
+            <strong style="color: #ffffff">${item.person}</strong><br>
+            <small style="color: ${isDebit ? '#00ffcc' : '#ff2a74'}; font-weight: bold;">${item.type.toUpperCase()}</small>
+            <div class="due-date">📅 Due Date: ${formatDate(item.dueDate)}</div>
+          </div>
+          <div style="text-align: right;">
+            <span style="color: #e0aaff; font-weight: bold;">₹${parseFloat(item.amount).toFixed(2)}</span>
+            <button class="delete-btn" onclick="deleteEntry(${index})">X</button>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+
+      totalDebitEl.innerText = `₹${totalDebit.toFixed(2)}`;
+      totalCreditEl.innerText = `₹${totalCredit.toFixed(2)}`;
+
+      localStorage.setItem('credit_master_entries', JSON.stringify(entries));
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      entries.push({
+        person: personInput.value,
+        amount: amountInput.value,
+        dueDate: dueDateInput.value,
+        type: typeInput.value
+      });
+      personInput.value = '';
+      amountInput.value = '';
+      dueDateInput.value = '';
+      updateUI();
+    });
+
+    function deleteEntry(index) {
+      entries.splice(index, 1);
+      updateUI();
+    }
+
+    updateUI();
+  </script>
 </body>
 </html>
